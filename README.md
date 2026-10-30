@@ -138,3 +138,25 @@ pip install -r requirements.txt
 ```powershell
 python manage.py runserver 8001
 ```
+
+## 页面展示
+
+### 浅色首页
+
+![浅色首页](img/home-light.png)
+
+### 深色首页
+
+![深色首页](img/home-dark.png)
+
+### 首页内容区域
+
+![首页内容区域](img/home-content.png)
+
+### 登录页面
+
+![登录页面](img/login.png)
+
+### 注册页面
+
+![注册页面](img/signup.png)
