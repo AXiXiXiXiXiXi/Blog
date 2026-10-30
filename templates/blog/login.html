@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}
+{% block title %}登录 · 随笔{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-intro">
+    <p class="eyebrow">WELCOME BACK / 欢迎回来</p>
+    <h1>继续写，<br><em>继续记录。</em></h1>
+    <p>登录后，回到你的写作空间。那些还没有写完的句子，仍然在等你。</p>
+    <div class="auth-decoration" aria-hidden="true">
+      <span>01</span>
+      <span class="auth-rule"></span>
+      <span>NOTE</span>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-heading">
+      <p class="eyebrow">YOUR SPACE</p>
+      <h2>登录</h2>
+      <p>回到你的写作空间</p>
+    </div>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% for field in form %}
+        <div class="field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+      <button class="primary-button" type="submit">
+        <span>登录</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </form>
+    <p class="form-switch">还没有账号？<a href="{% url 'signup' %}">注册一个</a></p>
+  </div>
+</section>
+{% endblock %}

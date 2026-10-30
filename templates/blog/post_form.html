@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% block title %}写文章 · 随笔{% endblock %}
+{% block content %}
+<section class="editor-page">
+  <header class="editor-heading">
+    <p class="eyebrow">NEW STORY / 新篇章</p>
+    <h1>写一篇新文章</h1>
+    <p>让想法慢慢成形。先写下来，再让它变得清晰。</p>
+  </header>
+
+  <div class="editor-layout">
+    <form class="post-form" method="post" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div class="field">
+        <label for="{{ form.title.id_for_label }}">标题</label>
+        {{ form.title }}
+        {% for error in form.title.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="field">
+        <label for="{{ form.category.id_for_label }}">分类</label>
+        {{ form.category }}
+        <datalist id="category-list">
+          {% for name in categories %}<option value="{{ name }}">{% endfor %}
+        </datalist>
+        <p class="field-help" id="category-help">{{ form.category.help_text }}</p>
+        {% for error in form.category.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="field">
+        <label for="{{ form.body.id_for_label }}">正文</label>
+        {{ form.body }}
+        <p class="field-help">支持自然分段。发布后，每一段都会保留独立的阅读节奏。</p>
+        {% for error in form.body.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="editor-actions">
+        <a class="secondary-button" href="{% url 'post_list' %}">取消</a>
+        <button class="primary-button" type="submit">
+          <span>发布文章</span>
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <aside class="writing-guide" aria-labelledby="writing-guide-title">
+      <p class="eyebrow">BEFORE YOU PUBLISH</p>
+      <h2 id="writing-guide-title">写作不是考试。</h2>
+      <ol>
+        <li><span>01</span><p><strong>从一个具体的瞬间开始。</strong>比起宏大的结论，细节更容易让文字留下温度。</p></li>
+        <li><span>02</span><p><strong>让标题说人话。</strong>它不需要展示全部答案，只需要让人想继续读下去。</p></li>
+        <li><span>03</span><p><strong>写完后读一遍。</strong>删掉重复的句子，也保留那些还没有想清楚的诚实。</p></li>
+      </ol>
+    </aside>
+  </div>
+</section>
+{% endblock %}

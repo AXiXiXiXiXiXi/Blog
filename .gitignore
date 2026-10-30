@@ -1,0 +1,38 @@
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.venv/
+venv/
+env/
+ENV/
+
+# 环境变量与本机配置
+.env
+.env.*
+!.env.example
+local_settings.py
+
+# Django 运行生成文件
+*.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+*.log
+
+# 测试和检查工具缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# IDE 和操作系统文件
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

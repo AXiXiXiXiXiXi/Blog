@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}
+{% block title %}注册 · 随笔{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-intro">
+    <p class="eyebrow">START WRITING / 开始写作</p>
+    <h1>从一个名字，<br><em>开始你的故事。</em></h1>
+    <p>创建账号，写下第一篇属于你的文章。这里不需要完美的开场，只需要真实的第一句话。</p>
+    <div class="auth-decoration" aria-hidden="true">
+      <span>02</span>
+      <span class="auth-rule"></span>
+      <span>FIRST PAGE</span>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-heading">
+      <p class="eyebrow">NEW WRITER</p>
+      <h2>创建账号</h2>
+      <p>建立你的写作空间</p>
+    </div>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% for field in form %}
+        <div class="field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<div class="field-help">{{ field.help_text|safe }}</div>{% endif %}
+          {% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+      <button class="primary-button" type="submit">
+        <span>创建账号</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </form>
+    <p class="form-switch">已经有账号？<a href="{% url 'login' %}">直接登录</a></p>
+  </div>
+</section>
+{% endblock %}

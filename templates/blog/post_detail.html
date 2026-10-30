@@ -1,0 +1,69 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }} · 随笔{% endblock %}
+{% block meta_description %}{{ post.body|striptags|truncatechars:120 }}{% endblock %}
+{% block content %}
+<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
+
+<div class="article-shell">
+  <a class="back-link" href="{% url 'post_list' %}">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M16 10H4M9 5l-5 5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>返回文章列表</span>
+  </a>
+
+  <article class="article-page">
+    <header class="article-header">
+      <div class="article-kicker">
+        <span class="category-tag">{{ post.category.name }}</span>
+        <span class="article-issue">READING NOTE</span>
+      </div>
+      <h1>{{ post.title }}</h1>
+      <p class="article-byline">一篇由 {{ post.author.username }} 写下的文章，约 {{ reading_minutes }} 分钟读完。</p>
+    </header>
+
+    <div class="article-layout">
+      <aside class="article-rail" aria-label="文章信息">
+        <div class="rail-block">
+          <span class="rail-label">作者</span>
+          <strong>{{ post.author.username }}</strong>
+        </div>
+        <div class="rail-block">
+          <span class="rail-label">发布</span>
+          <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"Y年n月j日" }}</time>
+        </div>
+        {% if post.updated_at != post.created_at %}
+          <div class="rail-block">
+            <span class="rail-label">更新</span>
+            <time datetime="{{ post.updated_at|date:'c' }}">{{ post.updated_at|date:"Y年n月j日" }}</time>
+          </div>
+        {% endif %}
+        <button class="share-button" type="button" data-copy-url="{{ request.build_absolute_uri }}">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M7.5 11.5 12.5 8M7.5 8.5l5 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="5" cy="10" r="2" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="15" cy="6" r="2" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="15" cy="14" r="2" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+          <span>复制链接</span>
+        </button>
+      </aside>
+
+      <div class="article-content">
+        <div class="article-body">{{ post.body|linebreaks }}</div>
+        <footer class="article-end">
+          <span class="end-rule" aria-hidden="true"></span>
+          <span>END OF NOTE</span>
+          <span class="end-rule" aria-hidden="true"></span>
+        </footer>
+        <a class="back-link bottom-back" href="{% url 'post_list' %}">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M16 10H4M9 5l-5 5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>继续阅读其他文章</span>
+        </a>
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}
